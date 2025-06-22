@@ -2,13 +2,16 @@
 
 ## 👥 Project Members
 
-- Emmanuella — emmanuellaileogben@gmail.com
+- Emmanuella Aimalohi Ileogben— emmanuellaileogben@gmail.com
 - Steve Asumba — steveasumba@gmail.com
 - Comfort Ndungu — comfort.ndungu.w@gmail.com
-- Joram — jorammwanyika@gmail.com
+- Joram Mwanyika— jorammwanyika@gmail.com
 - Adeosun Juwon — juwona71@gmail.com
 
 A comprehensive machine learning project demonstrating classical ML, deep learning, and NLP techniques with an interactive web interface for visualization and execution.
+
+## Live Demo Link
+https://ai-tools-and-applications-t1wd.vercel.app/ 
 
 ## 📋 Project Overview
 
