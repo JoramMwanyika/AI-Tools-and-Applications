@@ -9,6 +9,7 @@ import pandas as pd
 from collections import Counter
 import matplotlib.pyplot as plt
 import seaborn as sns
+import json
 
 # Sample Amazon product reviews for demonstration
 SAMPLE_REVIEWS = [
@@ -321,6 +322,43 @@ def main():
         print(f"  - Identified {len(set(product_names))} unique products")
         print(f"  - Analyzed sentiment for all reviews")
         print("=" * 50)
+        
+        # Return JSON results for API
+        results = {
+            "total_reviews": len(df),
+            "sentiment_distribution": {
+                "positive": int(sentiment_counts.get('Positive', 0)),
+                "negative": int(sentiment_counts.get('Negative', 0)),
+                "neutral": int(sentiment_counts.get('Neutral', 0))
+            },
+            "top_brands": [
+                {"brand": brand, "count": count}
+                for brand, count in brand_counter.most_common(5)
+            ],
+            "top_products": [
+                {"product": product, "count": count}
+                for product, count in product_counter.most_common(5)
+            ],
+            "sample_analysis": [
+                {
+                    "review": row['review_text'],
+                    "sentiment": row['sentiment'],
+                    "sentiment_score": int(row['sentiment_score']),
+                    "entities": [
+                        {"text": ent['text'], "label": ent['label']}
+                        for _, ent in entities_df[entities_df['review_id'] == idx + 1].iterrows()
+                    ] if not entities_df.empty else []
+                }
+                for idx, row in df.head(3).iterrows()
+            ],
+            "status": "completed"
+        }
+        
+        # Print JSON results at the end for API to capture
+        print("\n" + "=" * 50)
+        print("JSON RESULTS:")
+        print("=" * 50)
+        print(json.dumps(results, indent=2))
         
         return df, entities_df
         

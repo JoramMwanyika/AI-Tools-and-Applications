@@ -11,6 +11,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.metrics import classification_report, confusion_matrix
 import seaborn as sns
+import json
 
 def load_and_preprocess_data():
     """Load and preprocess the MNIST dataset"""
@@ -264,6 +265,35 @@ def main():
         if test_accuracy > 0.95:
             print("✓ Target accuracy of >95% achieved!")
         print("=" * 50)
+        
+        # Return JSON results for API
+        results = {
+            "test_accuracy": float(test_accuracy),
+            "test_loss": float(test_loss),
+            "training_history": {
+                "epochs": list(range(1, len(history.history['accuracy']) + 1)),
+                "accuracy": [float(x) for x in history.history['accuracy']],
+                "val_accuracy": [float(x) for x in history.history['val_accuracy']],
+                "loss": [float(x) for x in history.history['loss']],
+                "val_loss": [float(x) for x in history.history['val_loss']]
+            },
+            "sample_predictions": [
+                {
+                    "image_data": "/placeholder.svg?height=28&width=28",
+                    "true_label": int(y_test[i]),
+                    "predicted_label": int(y_pred_classes[i]),
+                    "confidence": float(np.max(y_pred[i]))
+                }
+                for i in range(min(5, len(y_test)))
+            ],
+            "status": "completed"
+        }
+        
+        # Print JSON results at the end for API to capture
+        print("\n" + "=" * 50)
+        print("JSON RESULTS:")
+        print("=" * 50)
+        print(json.dumps(results, indent=2))
         
     except Exception as e:
         print(f"Error occurred: {str(e)}")

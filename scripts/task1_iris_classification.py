@@ -6,6 +6,7 @@ Goal: Preprocess data, train decision tree classifier, evaluate performance
 
 import numpy as np
 import pandas as pd
+import json
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
@@ -137,7 +138,7 @@ def evaluate_model(model, X_test, y_test, target_names):
     print("\nFeature Importance:")
     print(feature_importance)
     
-    return y_pred, accuracy, precision, recall
+    return y_pred, accuracy, precision, recall, cm, feature_importance
 
 def visualize_results(y_test, y_pred, target_names):
     """Create visualizations for the results"""
@@ -171,7 +172,7 @@ def main():
         model, X_train, X_test, y_train, y_test = train_decision_tree(X, y)
         
         # Step 4: Evaluate model
-        y_pred, accuracy, precision, recall = evaluate_model(
+        y_pred, accuracy, precision, recall, cm, feature_importance = evaluate_model(
             model, X_test, y_test, iris.target_names
         )
         
@@ -185,6 +186,25 @@ def main():
         print(f"  - Precision: {precision:.4f}")
         print(f"  - Recall: {recall:.4f}")
         print("=" * 50)
+        
+        # Return JSON results for API
+        results = {
+            "accuracy": float(accuracy),
+            "precision": float(precision),
+            "recall": float(recall),
+            "feature_importance": [
+                {"feature": row['feature'], "importance": float(row['importance'])}
+                for _, row in feature_importance.iterrows()
+            ],
+            "confusion_matrix": cm.tolist(),
+            "status": "completed"
+        }
+        
+        # Print JSON results at the end for API to capture
+        print("\n" + "=" * 50)
+        print("JSON RESULTS:")
+        print("=" * 50)
+        print(json.dumps(results, indent=2))
         
     except Exception as e:
         print(f"Error occurred: {str(e)}")
