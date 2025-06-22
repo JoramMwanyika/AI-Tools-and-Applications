@@ -72,114 +72,140 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-#### Step 3: Install spaCy English Model (Required for Task 3)
+#### Step 3: Set Up Node.js Environment
 ```bash
-# Install the English language model for NLP tasks
-python -m spacy download en_core_web_sm
-```
-
-#### Step 4: Set Up Node.js Dependencies
-```bash
-# Install all Node.js dependencies
+# Install Node.js dependencies
 npm install
-
-# If you encounter dependency conflicts, use:
-npm install --force
 ```
 
-#### Step 5: Start the Development Server
+#### Step 4: Run the Application
 ```bash
-# Start the Next.js development server
+# Start the development server
 npm run dev
 ```
 
-#### Step 6: Access the Application
-- Open your web browser
-- Navigate to: **http://localhost:3000**
-- You should see the Machine Learning Tasks Dashboard
+#### Step 5: Access the Application
+Open your browser and navigate to: **http://localhost:3000**
 
-### Quick Start (Alternative Method)
-
-If you want to run the Python scripts directly without the web interface:
-
+#### Step 6: Run Python Scripts (Optional)
 ```bash
-# Task 1: Iris Classification
+# Run individual ML tasks
 python scripts/task1_iris_classification.py
-
-# Task 2: MNIST CNN
 python scripts/task2_mnist_cnn.py
-
-# Task 3: NLP Analysis
 python scripts/task3_nlp_spacy.py
 ```
 
-### Troubleshooting Common Issues
+### Quick Start (Python Scripts Only)
+If you only want to run the Python ML scripts without the web interface:
+
+```bash
+# Navigate to scripts directory
+cd scripts
+
+# Run the scripts directly
+python task1_iris_classification.py
+python task2_mnist_cnn.py
+python task3_nlp_spacy.py
+```
+
+## 🌐 Deployment
+
+### Netlify Deployment (Frontend Only)
+This project can be deployed to Netlify as a **static frontend demonstration**. 
+
+**⚠️ Important Limitations:**
+- ✅ **Works**: Beautiful UI, responsive design, demo results
+- ❌ **Doesn't Work**: Live Python script execution, API calls, real-time ML processing
+
+**Deployment Steps:**
+1. Connect your GitHub repository to Netlify
+2. Build command: `npm run build`
+3. Publish directory: `out`
+4. The site will show static demo results for all ML tasks
+
+### Local Deployment (Full Functionality)
+For complete functionality including live Python script execution:
+1. Follow the installation steps above
+2. Run `npm run dev` for the web interface
+3. Python scripts will execute through the API endpoints
+
+### Troubleshooting
 
 #### Node.js Issues
 ```bash
-# If npm install fails with dependency conflicts:
-npm install --force
-
-# If Next.js doesn't start properly:
-npx next dev --port 3000
-
-# Clear npm cache if needed:
+# Clear npm cache
 npm cache clean --force
+
+# Delete node_modules and reinstall
+rm -rf node_modules package-lock.json
+npm install
+
+# Check Node.js version
+node --version  # Should be 18 or higher
 ```
 
 #### Python Issues
 ```bash
-# If you encounter import errors:
-pip install --upgrade pip
-pip install -r requirements.txt
+# Upgrade pip
+python -m pip install --upgrade pip
 
-# If spaCy model is not found:
-python -m spacy download en_core_web_sm
+# Reinstall requirements
+pip install -r requirements.txt --force-reinstall
 
-# For TensorFlow GPU support (optional):
-pip install tensorflow-gpu
+# Check Python version
+python --version  # Should be 3.8 or higher
 ```
 
-#### Memory Issues (Task 2)
-- Reduce batch size in CNN training
-- Use CPU instead of GPU if memory is limited
-- Close other applications to free up RAM
+#### Build Issues
+```bash
+# Clear Next.js cache
+rm -rf .next
 
-### Verification Steps
+# Rebuild the project
+npm run build
+```
 
+### Verification
 After installation, verify everything is working:
 
-1. **Check Python environment:**
-   ```bash
-   python --version  # Should be 3.8+
-   pip list  # Should show all required packages
-   ```
+1. **Frontend**: Visit http://localhost:3000
+2. **Task 1**: Click on "Task 1" and verify the Iris classification demo loads
+3. **Task 2**: Click on "Task 2" and verify the CNN demo loads  
+4. **Task 3**: Click on "Task 3" and verify the NLP demo loads
 
-2. **Check Node.js environment:**
-   ```bash
-   node --version  # Should be 18+
-   npm --version   # Should be 8+
-   ```
+## 📁 Project Structure
 
-3. **Test the application:**
-   - Start the server: `npm run dev`
-   - Open http://localhost:3000
-   - You should see the dashboard with 3 task cards
+```
+assignment-3/
+├── app/                    # Next.js application pages
+│   ├── page.tsx           # Main dashboard
+│   ├── task1/page.tsx     # Iris classification demo
+│   ├── task2/page.tsx     # CNN demo
+│   └── task3/page.tsx     # NLP demo
+├── components/            # React UI components
+├── scripts/              # Python ML scripts
+│   ├── task1_iris_classification.py
+│   ├── task2_mnist_cnn.py
+│   └── task3_nlp_spacy.py
+├── public/               # Static assets
+├── package.json          # Node.js dependencies
+├── requirements.txt      # Python dependencies
+└── README.md            # This file
+```
 
-### Development Commands
+## 🛠️ Development Commands
 
 ```bash
-# Start development server
-npm run dev
+# Development
+npm run dev              # Start development server
+npm run build            # Build for production
+npm run start            # Start production server
+npm run lint             # Run ESLint
 
-# Build for production
-npm run build
-
-# Start production server
-npm start
-
-# Run linting
-npm run lint
+# Python scripts
+python scripts/task1_iris_classification.py
+python scripts/task2_mnist_cnn.py
+python scripts/task3_nlp_spacy.py
 ```
 
 ## 📦 Dependencies

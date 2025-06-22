@@ -5,6 +5,20 @@
 [build.environment]
   NODE_VERSION = "18"
   NPM_VERSION = "9"
+  # Explicitly tell Netlify this is a Node.js project
+  NPM_FLAGS = "--production"
+  # Disable automatic Python detection
+  SKIP_PIP_INSTALL = "true"
+  SKIP_PYTHON_INSTALL = "true"
+  # Force Node.js build
+  NODE_ENV = "production"
+
+# Ignore Python files during build
+[[build.processing.ignore]]
+  pattern = "*.py"
+  
+[[build.processing.ignore]]
+  pattern = "requirements.txt"
 
 [[redirects]]
   from = "/*"
