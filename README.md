@@ -1,5 +1,13 @@
 # Machine Learning Tasks Project
 
+## 👥 Project Members
+
+- Emmanuella — emmanuellaileogben@gmail.com
+- Steve Asumba — steveasumba@gmail.com
+- Comfort Ndungu — comfort.ndungu.w@gmail.com
+- Joram — jorammwanyika@gmail.com
+- Adeosun Juwon — juwona71@gmail.com
+
 A comprehensive machine learning project demonstrating classical ML, deep learning, and NLP techniques with an interactive web interface for visualization and execution.
 
 ## 📋 Project Overview
